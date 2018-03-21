@@ -265,11 +265,37 @@ public class Picture extends SimplePicture
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
+        count++;
         leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
+      }
+    }
+    System.out.println(count);
+  }
+  
+  //mirrorArms and mirrorGull all in one. Didn't want to bother copy/pasting code again.
+  //If mirror point is negative it mirrors vertical instead of horizontal.
+  /** Mirror just part of a picture*/ 
+  public void mirrorPartial(int[] tl, int[] br, int mP)
+  {
+    int mirrorPoint = Math.abs(mP);
+    Pixel originPixel = null;
+    Pixel newPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+    
+    // loop through the rows
+    for (int row = tl[0]; row < br[0]; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = tl[1]; col < br[1]; col++)
+      {
+    	originPixel = pixels[row][col];
+    	if(mP > 0)
+    		newPixel = pixels[mirrorPoint - row + mirrorPoint][col];
+    	else
+    		newPixel = pixels[row][mirrorPoint-col + mirrorPoint];
+        newPixel.setColor(originPixel.getColor());
       }
     }
   }
