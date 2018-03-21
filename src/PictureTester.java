@@ -110,24 +110,33 @@ public class PictureTester
   /** Method to test mirrorArms */
   public static void testMirrorArms()
   {
-    Picture temple = new Picture("snowman.jpg");
+    Picture picture = new Picture("snowman.jpg");
     int[] tl1 = {154, 104}, br1 = {192, 168}, tl2 = {166, 238}, br2 = {198, 292};
-    temple.explore();
-    temple.mirrorPartial(tl1, br1, 200);
-    temple.mirrorPartial(tl2, br2, 200);
-    temple.explore();
+    picture.explore();
+    picture.mirrorPartial(tl1, br1, 200);
+    picture.mirrorPartial(tl2, br2, 200);
+    picture.explore();
   }
   
   /** Method to test mirrorGull*/
   public static void testMirrorGull()
   {
-    Picture temple = new Picture("seagull.jpg");
+    Picture picture = new Picture("seagull.jpg");
     int[] tl1 = {234, 232}, br1 = {329, 351};
-    temple.explore();
-    temple.mirrorPartial(tl1, br1, -200); // Literally just added 3 lines of code to mirrorArms. I'm just going to reuse the same code as before.
-    temple.explore();
+    picture.explore();
+    picture.mirrorPartial(tl1, br1, -200); // Literally just added 3 lines of code to mirrorArms. I'm just going to reuse the same code as before.
+    picture.explore();
   }
   
+  /** Method to test extra copy method*/
+  	public static void testCopy() {
+	    Picture fromPicture = new Picture("seagull.jpg");
+	    Picture picture = new Picture("butterfly1.jpg");
+	    picture.explore();
+	    picture.copy(fromPicture, 324, 232, 329, 351);
+	    picture.explore();
+  	}
+  	
   /** Method to test the collage method */
   public static void testCollage()
   {
@@ -163,11 +172,11 @@ public class PictureTester
 	  //testMirrorHorizontal();
 	  //testMirrorHorizontalBotToTop();
 	  //testMirrorDiagonal();
-	testMirrorTemple();
-	testMirrorArms();
-    testMirrorGull();
+	  //testMirrorTemple();
+	  //testMirrorArms();
+	  //testMirrorGull();
 	  //testCollage();
-    //testCopy();
+    testCopy();
 	  //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
