@@ -107,6 +107,27 @@ public class PictureTester
     temple.explore();
   }
   
+  /** Method to test mirrorArms */
+  public static void testMirrorArms()
+  {
+    Picture temple = new Picture("snowman.jpg");
+    int[] tl1 = {154, 104}, br1 = {192, 168}, tl2 = {166, 238}, br2 = {198, 292};
+    temple.explore();
+    temple.mirrorPartial(tl1, br1, 200);
+    temple.mirrorPartial(tl2, br2, 200);
+    temple.explore();
+  }
+  
+  /** Method to test mirrorGull*/
+  public static void testMirrorGull()
+  {
+    Picture temple = new Picture("seagull.jpg");
+    int[] tl1 = {234, 232}, br1 = {329, 351};
+    temple.explore();
+    temple.mirrorPartial(tl1, br1, -200); // Literally just added 3 lines of code to mirrorArms. I'm just going to reuse the same code as before.
+    temple.explore();
+  }
+  
   /** Method to test the collage method */
   public static void testCollage()
   {
@@ -141,11 +162,10 @@ public class PictureTester
 	  //testMirrorVerticalRightToLeft();
 	  //testMirrorHorizontal();
 	  //testMirrorHorizontalBotToTop();
-	  testMirrorDiagonal();
-	  //testMirrorTemple();
-    //testMirrorArms();
-    //testMirrorGull();
-    //testMirrorDiagonal();
+	  //testMirrorDiagonal();
+	testMirrorTemple();
+	testMirrorArms();
+    testMirrorGull();
 	  //testCollage();
     //testCopy();
 	  //testEdgeDetection();
