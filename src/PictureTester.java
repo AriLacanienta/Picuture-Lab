@@ -80,6 +80,24 @@ public class PictureTester
     butterfly.explore();
   }
   
+  /** Method to test mirrorHorizontalBotToTop*/
+  public static void testMirrorHorizontalBotToTop()
+  {
+    Picture butterfly = new Picture("butterfly1.jpg");
+    butterfly.explore();
+    butterfly.mirrorHorizontalBotToTop();
+    butterfly.explore();
+  }
+  
+  /** Method to test mirrorDiagonal*/
+  public static void testMirrorDiagonal()
+  {
+    Picture butterfly = new Picture("beach.jpg");
+    butterfly.explore();
+    butterfly.mirrorDiagonal();
+    butterfly.explore();
+  }
+  
   /** Method to test mirrorTemple */
   public static void testMirrorTemple()
   {
@@ -121,7 +139,9 @@ public class PictureTester
 	  //testFixUnderwater();
 	  //testMirrorVertical();
 	  //testMirrorVerticalRightToLeft();
-	testMirrorHorizontal();
+	  //testMirrorHorizontal();
+	  //testMirrorHorizontalBotToTop();
+	  testMirrorDiagonal();
 	  //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
