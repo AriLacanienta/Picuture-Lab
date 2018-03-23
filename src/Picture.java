@@ -265,11 +265,37 @@ public class Picture extends SimplePicture
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
+        count++;
         leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
+      }
+    }
+    System.out.println(count);
+  }
+  
+  //mirrorArms and mirrorGull all in one. Didn't want to bother copy/pasting code again.
+  //If mirror point is negative it mirrors vertical instead of horizontal.
+  /** Mirror just part of a picture*/ 
+  public void mirrorPartial(int[] tl, int[] br, int mP)
+  {
+    int mirrorPoint = Math.abs(mP);
+    Pixel originPixel = null;
+    Pixel newPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+    
+    // loop through the rows
+    for (int row = tl[0]; row < br[0]; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = tl[1]; col < br[1]; col++)
+      {
+    	originPixel = pixels[row][col];
+    	if(mP > 0)
+    		newPixel = pixels[mirrorPoint - row + mirrorPoint][col];
+    	else
+    		newPixel = pixels[row][mirrorPoint-col + mirrorPoint];
+        newPixel.setColor(originPixel.getColor());
       }
     }
   }
@@ -281,8 +307,7 @@ public class Picture extends SimplePicture
     * @param startRow the start row to copy to
     * @param startCol the start col to copy to
     */
-  public void copy(Picture fromPic, 
-                 int startRow, int startCol)
+  public void copy(Picture fromPic, int startRow, int startCol)
   {
     Pixel fromPixel = null;
     Pixel toPixel = null;
@@ -304,6 +329,28 @@ public class Picture extends SimplePicture
       }
     }   
   }
+  
+  	public void copy(Picture originPic, int fromStartRow, int fromStartCol, int fromEndRow, int fromEndCol, // From Coordinates
+  			int toStartRow, int toStartCol) // To Coordinates
+  	{
+  		Pixel fromPixel = null;
+  		Pixel toPixel = null;
+  		Pixel[][] toPixels = this.getPixels2D();
+  		Pixel[][] fromPixels = originPic.getPixels2D();
+  		for (int fromRow = fromStartRow, toRow = toStartRow; 
+  				fromRow < fromEndRow && toRow < toPixels.length; 
+  				fromRow++, toRow++)
+  		{
+  			for (int fromCol = fromStartCol, toCol = toStartCol; 
+  					fromCol < fromEndCol && toCol < toPixels[0].length;  
+  					fromCol++, toCol++)
+  			{
+  				fromPixel = fromPixels[fromRow][fromCol];
+  				toPixel = toPixels[toRow][toCol];
+  				toPixel.setColor(fromPixel.getColor());
+  			}
+  		}   
+  	}
 
   /** Method to create a collage of several pictures */
   public void createCollage()
@@ -322,6 +369,14 @@ public class Picture extends SimplePicture
     this.write("collage.jpg");
   }
   
+  public void myCollage() {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(int i = 0; i < pixels.length && i < pixels[0].length; i++) {
+		  this.copy(this, 0, 0, i, i, i, i);
+	  }
+	  this.mirrorDiagonal();
+	  this.fixUnderwater();
+  }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
@@ -330,25 +385,57 @@ public class Picture extends SimplePicture
   {
     Pixel leftPixel = null;
     Pixel rightPixel = null;
+    Pixel bottomPixel = null;
     Pixel[][] pixels = this.getPixels2D();
     Color rightColor = null;
-    for (int row = 0; row < pixels.length; row++)
+    Color bottomColor = null;
+    for (int row = 0; row < pixels.length-1; row++)
     {
       for (int col = 0; 
            col < pixels[0].length-1; col++)
       {
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][col+1];
+        bottomPixel = pixels[row+1][col];
         rightColor = rightPixel.getColor();
-        if (leftPixel.colorDistance(rightColor) > 
-            edgeDist)
+        bottomColor = bottomPixel.getColor();
+        if (leftPixel.colorDistance(rightColor) > edgeDist
+        	|| leftPixel.colorDistance(bottomColor) > edgeDist)
           leftPixel.setColor(Color.BLACK);
-        else
+        else 
           leftPixel.setColor(Color.WHITE);
       }
     }
   }
   
+  
+  /** Method to show large changes in intensity
+   * @param intsyThresh Intensity threshold for detecting edges
+   */
+  	public void edgeDetection2(int intsyThresh) {
+  		Pixel thisPixel = null;
+	    Pixel rightPixel = null;
+	    Pixel bottomPixel = null;
+	    Pixel[][] pixels = this.getPixels2D();
+	    for (int row = 0; row < pixels.length-1; row++) {
+	    	for (int col = 0; col < pixels[0].length-1; col++) {
+	    		thisPixel = pixels[row][col];
+	    		rightPixel = pixels[row][col+1];
+	    		bottomPixel = pixels[row+1][col];
+	    		
+	    		if(getIntensity(thisPixel) - getIntensity(rightPixel) > intsyThresh
+	    				|| getIntensity(thisPixel) - getIntensity(bottomPixel) > intsyThresh) {
+	    			thisPixel.setColor(Color.BLACK);
+	    		} else {
+	    			thisPixel.setColor(Color.WHITE);
+	    		}
+	    	}
+    	}
+    }
+  	
+  	private int getIntensity(Pixel thisPixel) {
+  		return (thisPixel.getRed() + thisPixel.getGreen() + thisPixel.getBlue()) / 3;
+  	}
   
   /* Main method for testing - each class in Java can have a main 
    * method 

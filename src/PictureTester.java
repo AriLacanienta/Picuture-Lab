@@ -107,6 +107,37 @@ public class PictureTester
     temple.explore();
   }
   
+  /** Method to test mirrorArms */
+  public static void testMirrorArms()
+  {
+    Picture picture = new Picture("snowman.jpg");
+    int[] tl1 = {154, 104}, br1 = {192, 168}, tl2 = {166, 238}, br2 = {198, 292};
+    picture.explore();
+    picture.mirrorPartial(tl1, br1, 200);
+    picture.mirrorPartial(tl2, br2, 200);
+    picture.explore();
+  }
+  
+  /** Method to test mirrorGull*/
+  public static void testMirrorGull()
+  {
+    Picture picture = new Picture("seagull.jpg");
+    int[] tl1 = {234, 232}, br1 = {329, 351};
+    picture.explore();
+    picture.mirrorPartial(tl1, br1, -200); // Literally just added 3 lines of code to mirrorArms. I'm just going to reuse the same code as before.
+    picture.explore();
+  }
+  
+  /** Method to test extra copy method*/
+  	public static void testCopy() {
+	    Picture fromPicture = new Picture("seagull.jpg");
+	    Picture picture = new Picture("butterfly1.jpg");
+	    fromPicture.explore();
+	    picture.explore();
+	    picture.copy(fromPicture, 230, 210, 329, 351, 80, 300);
+	    picture.explore();
+  	}
+  	
   /** Method to test the collage method */
   public static void testCollage()
   {
@@ -115,11 +146,27 @@ public class PictureTester
     canvas.explore();
   }
   
+  /** Method to test myCollage */
+  public static void testMyCollage() {
+	  Picture originPic = new Picture("seagull.jpg");
+	  originPic.explore();
+	  originPic.myCollage();
+	  originPic.explore();
+  }
+  
   /** Method to test edgeDetection */
   public static void testEdgeDetection()
   {
     Picture swan = new Picture("swan.jpg");
     swan.edgeDetection(10);
+    swan.explore();
+  }
+  
+  /** Method to test edgeDetection */
+  public static void testEdgeDetection2()
+  {
+    Picture swan = new Picture("swan.jpg");
+    swan.edgeDetection2(3);
     swan.explore();
   }
   
@@ -141,15 +188,15 @@ public class PictureTester
 	  //testMirrorVerticalRightToLeft();
 	  //testMirrorHorizontal();
 	  //testMirrorHorizontalBotToTop();
-	  testMirrorDiagonal();
+	  //testMirrorDiagonal();
 	  //testMirrorTemple();
-    //testMirrorArms();
-    //testMirrorGull();
-    //testMirrorDiagonal();
+	  //testMirrorArms();
+	  //testMirrorGull();
 	  //testCollage();
-    //testCopy();
+	  //testCopy();
+	  //testMyCollage();
 	  //testEdgeDetection();
-    //testEdgeDetection2();
+    testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
     //testGetCountRedOverValue(250);
