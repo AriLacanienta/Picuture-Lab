@@ -330,18 +330,19 @@ public class Picture extends SimplePicture
     }   
   }
   
-  	public void copy(Picture originPic, int startRow, int startCol, int endRow, int endCol)
+  	public void copy(Picture originPic, int fromStartRow, int fromStartCol, int fromEndRow, int fromEndCol, // From Coordinates
+  			int toStartRow, int toStartCol) // To Coordinates
   	{
   		Pixel fromPixel = null;
   		Pixel toPixel = null;
   		Pixel[][] toPixels = this.getPixels2D();
   		Pixel[][] fromPixels = originPic.getPixels2D();
-  		for (int fromRow = startRow, toRow = 0; 
-  				fromRow < endRow && toRow < toPixels.length; 
+  		for (int fromRow = fromStartRow, toRow = toStartRow; 
+  				fromRow < fromEndRow && toRow < toPixels.length; 
   				fromRow++, toRow++)
   		{
-  			for (int fromCol = startCol, toCol = 0; 
-  					fromCol < endCol && toCol < toPixels[0].length;  
+  			for (int fromCol = fromStartCol, toCol = toStartCol; 
+  					fromCol < fromEndCol && toCol < toPixels[0].length;  
   					fromCol++, toCol++)
   			{
   				fromPixel = fromPixels[fromRow][fromCol];
