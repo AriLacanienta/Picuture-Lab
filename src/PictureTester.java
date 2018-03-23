@@ -132,8 +132,9 @@ public class PictureTester
   	public static void testCopy() {
 	    Picture fromPicture = new Picture("seagull.jpg");
 	    Picture picture = new Picture("butterfly1.jpg");
+	    fromPicture.explore();
 	    picture.explore();
-	    picture.copy(fromPicture, 324, 232, 329, 351);
+	    picture.copy(fromPicture, 230, 210, 329, 351, 80, 300);
 	    picture.explore();
   	}
   	
@@ -143,6 +144,14 @@ public class PictureTester
     Picture canvas = new Picture("640x480.jpg");
     canvas.createCollage();
     canvas.explore();
+  }
+  
+  /** Method to test myCollage */
+  public static void testMyCollage() {
+	  Picture originPic = new Picture("seagull.jpg");
+	  originPic.explore();
+	  originPic.myCollage();
+	  originPic.explore();
   }
   
   /** Method to test edgeDetection */
@@ -176,7 +185,8 @@ public class PictureTester
 	  //testMirrorArms();
 	  //testMirrorGull();
 	  //testCollage();
-    testCopy();
+	//testCopy();
+	testMyCollage();
 	  //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();

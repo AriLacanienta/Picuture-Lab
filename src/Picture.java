@@ -369,6 +369,14 @@ public class Picture extends SimplePicture
     this.write("collage.jpg");
   }
   
+  public void myCollage() {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(int i = 0; i < pixels.length && i < pixels[0].length; i++) {
+		  this.copy(this, 0, 0, i, i, i, i);
+	  }
+	  this.mirrorDiagonal();
+	  this.fixUnderwater();
+  }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
