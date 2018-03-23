@@ -409,6 +409,34 @@ public class Picture extends SimplePicture
   }
   
   
+  /** Method to show large changes in intensity
+   * @param intsyThresh Intensity threshold for detecting edges
+   */
+  	public void edgeDetection2(int intsyThresh) {
+  		Pixel thisPixel = null;
+	    Pixel rightPixel = null;
+	    Pixel bottomPixel = null;
+	    Pixel[][] pixels = this.getPixels2D();
+	    for (int row = 0; row < pixels.length-1; row++) {
+	    	for (int col = 0; col < pixels[0].length-1; col++) {
+	    		thisPixel = pixels[row][col];
+	    		rightPixel = pixels[row][col+1];
+	    		bottomPixel = pixels[row+1][col];
+	    		
+	    		if(getIntensity(thisPixel) - getIntensity(rightPixel) > intsyThresh
+	    				|| getIntensity(thisPixel) - getIntensity(bottomPixel) > intsyThresh) {
+	    			thisPixel.setColor(Color.BLACK);
+	    		} else {
+	    			thisPixel.setColor(Color.WHITE);
+	    		}
+	    	}
+    	}
+    }
+  	
+  	private int getIntensity(Pixel thisPixel) {
+  		return (thisPixel.getRed() + thisPixel.getGreen() + thisPixel.getBlue()) / 3;
+  	}
+  
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
