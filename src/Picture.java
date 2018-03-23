@@ -307,8 +307,7 @@ public class Picture extends SimplePicture
     * @param startRow the start row to copy to
     * @param startCol the start col to copy to
     */
-  public void copy(Picture fromPic, 
-                 int startRow, int startCol)
+  public void copy(Picture fromPic, int startRow, int startCol)
   {
     Pixel fromPixel = null;
     Pixel toPixel = null;
@@ -330,6 +329,28 @@ public class Picture extends SimplePicture
       }
     }   
   }
+  
+  	public void copy(Picture originPic, int fromStartRow, int fromStartCol, int fromEndRow, int fromEndCol, // From Coordinates
+  			int toStartRow, int toStartCol) // To Coordinates
+  	{
+  		Pixel fromPixel = null;
+  		Pixel toPixel = null;
+  		Pixel[][] toPixels = this.getPixels2D();
+  		Pixel[][] fromPixels = originPic.getPixels2D();
+  		for (int fromRow = fromStartRow, toRow = toStartRow; 
+  				fromRow < fromEndRow && toRow < toPixels.length; 
+  				fromRow++, toRow++)
+  		{
+  			for (int fromCol = fromStartCol, toCol = toStartCol; 
+  					fromCol < fromEndCol && toCol < toPixels[0].length;  
+  					fromCol++, toCol++)
+  			{
+  				fromPixel = fromPixels[fromRow][fromCol];
+  				toPixel = toPixels[toRow][toCol];
+  				toPixel.setColor(fromPixel.getColor());
+  			}
+  		}   
+  	}
 
   /** Method to create a collage of several pictures */
   public void createCollage()
@@ -348,6 +369,14 @@ public class Picture extends SimplePicture
     this.write("collage.jpg");
   }
   
+  public void myCollage() {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(int i = 0; i < pixels.length && i < pixels[0].length; i++) {
+		  this.copy(this, 0, 0, i, i, i, i);
+	  }
+	  this.mirrorDiagonal();
+	  this.fixUnderwater();
+  }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
